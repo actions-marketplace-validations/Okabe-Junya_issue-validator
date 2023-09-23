@@ -18,6 +18,9 @@ inputs:
     description: 'regex flags for body'
     required: false
     default: ''
+  token:
+    description: 'token for github'
+    default: ${{ github.server_url == 'https://github.com' && github.token || '' }}
 outputs:
   result:
     description: 'result of validation'
