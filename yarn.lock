@@ -2709,6 +2709,11 @@ jest-environment-node@^29.7.0:
     jest-mock "^29.7.0"
     jest-util "^29.7.0"
 
+jest-failure-reporter@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/jest-failure-reporter/-/jest-failure-reporter-1.0.1.tgz#d28d1e677b81e963f7d6c060a130ba3a22877b58"
+  integrity sha512-fx7jrqYgnQtPzTsVQbLczF8qZNqwOFW3DUQnsgvisVCNvoZD2FLILihHdjgUKBKvsGyzlaPP8E0+cSiIfk5hgQ==
+
 jest-get-type@^29.6.3:
   version "29.6.3"
   resolved "https://registry.yarnpkg.com/jest-get-type/-/jest-get-type-29.6.3.tgz#36f499fdcea197c1045a127319c0481723908fd1"
