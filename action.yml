@@ -1,5 +1,6 @@
 name: 'issue-validator'
 description: 'auto close issue if it does not meet the conditions'
+author: 'Okabe-Junya'
 inputs:
   title:
     description: 'title for issue'
@@ -23,4 +24,4 @@ outputs:
 
 runs:
   using: 'node20'
-  main: 'index.js'
+  main: 'dist/index.js'
