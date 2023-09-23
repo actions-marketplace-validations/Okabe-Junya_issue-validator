@@ -1,0 +1,26 @@
+name: 'issue-validator'
+description: 'auto close issue if it does not meet the conditions'
+inputs:
+  title:
+    description: 'title for issue'
+    required: false
+    default: ''
+  body:
+    description: 'body for issue'
+    required: false
+    default: ''
+  title-regex-flags:
+    description: 'regex flags for title'
+    required: false
+    default: ''
+  body-regex-flags:
+    description: 'regex flags for body'
+    required: false
+    default: ''
+outputs:
+  result:
+    description: 'result of validation'
+
+runs:
+  using: 'node20'
+  main: 'index.js'
