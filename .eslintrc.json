@@ -1,0 +1,29 @@
+{
+  "plugins": ["jest", "jest-formatting", "@typescript-eslint", "prettier"],
+  "extends": [
+    "plugin:jest/recommended",
+    "plugin:prettier/recommended",
+    "plugin:github/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2022,
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "printWidth": 120,
+        "singleQuote": true,
+        "trailingComma": "all",
+        "arrowParens": "always",
+        "endOfLine": "auto"
+      }
+    ]
+  },
+  "env": {
+    "node": true,
+    "jest/globals": true
+  }
+}
