@@ -9641,7 +9641,7 @@ exports.getPullRequestTitleAndBody = exports.getIssueTitleAndBody = void 0;
 const core_1 = __nccwpck_require__(2186);
 const github_1 = __nccwpck_require__(5438);
 async function getIssueTitleAndBody(issueNumber) {
-    const token = (0, core_1.getInput)('token', { required: true });
+    const token = (0, core_1.getInput)('github-token', { required: true });
     const octokit = (0, github_1.getOctokit)(token);
     const { data: issue } = await octokit.rest.issues.get({
         owner: github_1.context.repo.owner,
@@ -9656,7 +9656,7 @@ async function getIssueTitleAndBody(issueNumber) {
 }
 exports.getIssueTitleAndBody = getIssueTitleAndBody;
 async function getPullRequestTitleAndBody(pullNumber) {
-    const token = (0, core_1.getInput)('token', { required: true });
+    const token = (0, core_1.getInput)('github-token', { required: true });
     const octokit = (0, github_1.getOctokit)(token);
     const { data: pullRequest } = await octokit.rest.pulls.get({
         owner: github_1.context.repo.owner,
@@ -9909,7 +9909,7 @@ async function run() {
         const issueType = (0, core_1.getInput)('issue-type') || '';
         const issueNumber = (0, core_1.getInput)('issue-number') || '';
         const isAutoClose = (0, core_1.getInput)('is-auto-close') || '';
-        const octokit = (0, github_1.getOctokit)((0, core_1.getInput)('github-token'));
+        const octokit = (0, github_1.getOctokit)((0, core_1.getInput)('github-token', { required: true }));
         const result = await (0, validate_1.validateIssueTitleAndBody)(issueType, parseInt(issueNumber), titleRegex, bodyRegex);
         if (result === true) {
             (0, core_1.setOutput)('result', 'true');

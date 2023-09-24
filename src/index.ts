@@ -14,7 +14,7 @@ export async function run() {
     const issueNumber = getInput('issue-number') || '';
     const isAutoClose = getInput('is-auto-close') || '';
 
-    const octokit = getOctokit(getInput('github-token'));
+    const octokit = getOctokit(getInput('github-token', { required: true }));
     const result = await validateIssueTitleAndBody(issueType, parseInt(issueNumber), titleRegex, bodyRegex);
     if (result === true) {
       setOutput('result', 'true');
