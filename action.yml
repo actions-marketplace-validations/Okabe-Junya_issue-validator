@@ -21,7 +21,7 @@ inputs:
     description: 'regex flags for body'
     required: false
     default: ''
-  token:
+  github-token:
     description: 'token for github'
     default: ${{ github.server_url == 'https://github.com' && github.token || '' }}
   is-auto-close:
