@@ -9631,125 +9631,22 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
-/***/ 6144:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.run = void 0;
-const core = __importStar(__nccwpck_require__(2186));
-const validate_1 = __nccwpck_require__(4953);
-const github = __importStar(__nccwpck_require__(5438));
-async function run() {
-    try {
-        const title = core.getInput('title') || '';
-        const title_regex_flags = core.getInput('title-regex-flags') || '';
-        const title_regex = new RegExp(title, title_regex_flags);
-        const body = core.getInput('body') || '';
-        const body_regex_flags = core.getInput('body-regex-flags') || '';
-        const body_regex = new RegExp(body, body_regex_flags);
-        const issue_type = core.getInput('issue-type') || '';
-        const issue_number = core.getInput('issue-number') || '';
-        const is_auto_close = core.getInput('is-auto-close') || '';
-        const octokit = github.getOctokit(core.getInput('github-token'));
-        const result = await (0, validate_1.validateIssueTitleAndBody)(issue_type, parseInt(issue_number), title_regex, body_regex);
-        if (result === true) {
-            core.setOutput('result', 'true');
-        }
-        else {
-            if (is_auto_close === 'true') {
-                core.warning(`Issue #${issue_number} is not valid. Auto closing issue...`);
-                // Add comment
-                await octokit.rest.issues.createComment({
-                    owner: github.context.repo.owner,
-                    repo: github.context.repo.repo,
-                    issue_number: parseInt(issue_number),
-                    body: `Issue #${issue_number} is not valid: Reason: ${result}: auto closing issue...`,
-                });
-                // Close issue
-                await octokit.rest.issues.update({
-                    owner: github.context.repo.owner,
-                    repo: github.context.repo.repo,
-                    issue_number: parseInt(issue_number),
-                    state: 'closed',
-                });
-            }
-            core.setOutput('result', 'false');
-        }
-    }
-    catch (error) {
-        core.setFailed(error.message);
-    }
-}
-exports.run = run;
-run();
-
-
-/***/ }),
-
 /***/ 1314:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getPullRequestTitleAndBody = exports.getIssueTitleAndBody = void 0;
-const core = __importStar(__nccwpck_require__(2186));
-const github = __importStar(__nccwpck_require__(5438));
-async function getIssueTitleAndBody(issue_number) {
-    const token = core.getInput('token', { required: true });
-    const octokit = github.getOctokit(token);
+const core_1 = __nccwpck_require__(2186);
+const github_1 = __nccwpck_require__(5438);
+async function getIssueTitleAndBody(issueNumber) {
+    const token = (0, core_1.getInput)('token', { required: true });
+    const octokit = (0, github_1.getOctokit)(token);
     const { data: issue } = await octokit.rest.issues.get({
-        owner: github.context.repo.owner,
-        repo: github.context.repo.repo,
-        issue_number,
+        owner: github_1.context.repo.owner,
+        repo: github_1.context.repo.repo,
+        issue_number: issueNumber,
     });
     issue.body = issue.body || '';
     return {
@@ -9758,13 +9655,13 @@ async function getIssueTitleAndBody(issue_number) {
     };
 }
 exports.getIssueTitleAndBody = getIssueTitleAndBody;
-async function getPullRequestTitleAndBody(pull_number) {
-    const token = core.getInput('token', { required: true });
-    const octokit = github.getOctokit(token);
+async function getPullRequestTitleAndBody(pullNumber) {
+    const token = (0, core_1.getInput)('token', { required: true });
+    const octokit = (0, github_1.getOctokit)(token);
     const { data: pullRequest } = await octokit.rest.pulls.get({
-        owner: github.context.repo.owner,
-        repo: github.context.repo.repo,
-        pull_number,
+        owner: github_1.context.repo.owner,
+        repo: github_1.context.repo.repo,
+        pull_number: pullNumber,
     });
     pullRequest.body = pullRequest.body || '';
     return {
@@ -9785,28 +9682,31 @@ exports.getPullRequestTitleAndBody = getPullRequestTitleAndBody;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.validateIssueTitleAndBody = void 0;
 const utils_1 = __nccwpck_require__(1314);
-async function validateIssueTitleAndBody(issue_type, issue_number, title_regex, body_regex) {
-    if (issue_type === 'issue') {
-        const { title, body } = await (0, utils_1.getIssueTitleAndBody)(issue_number);
-        if (title_regex && !title_regex.test(title)) {
+async function validateIssueTitleAndBody(issueType, issueNumber, titleRegex, bodyRegex) {
+    if (!titleRegex && !bodyRegex) {
+        return true;
+    }
+    if (issueType === 'issue') {
+        const { title, body } = await (0, utils_1.getIssueTitleAndBody)(issueNumber);
+        if (titleRegex && !titleRegex.test(title)) {
             return false;
         }
-        if (body_regex && !body_regex.test(body)) {
+        if (bodyRegex && !bodyRegex.test(body)) {
             return false;
         }
         return true;
     }
-    if (issue_type === 'pull_request') {
-        const { title, body } = await (0, utils_1.getPullRequestTitleAndBody)(issue_number);
-        if (title_regex && !title_regex.test(title)) {
+    if (issueType === 'pull_request') {
+        const { title, body } = await (0, utils_1.getPullRequestTitleAndBody)(issueNumber);
+        if (titleRegex && !titleRegex.test(title)) {
             return false;
         }
-        if (body_regex && !body_regex.test(body)) {
+        if (bodyRegex && !bodyRegex.test(body)) {
             return false;
         }
         return true;
     }
-    throw new Error(`Invalid issue type: ${issue_type}`);
+    throw new Error(`Invalid issue type: ${issueType}`);
 }
 exports.validateIssueTitleAndBody = validateIssueTitleAndBody;
 
@@ -9987,13 +9887,65 @@ module.exports = JSON.parse('[[[0,44],"disallowed_STD3_valid"],[[45,46],"valid"]
 /******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";
 /******/ 	
 /************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __nccwpck_require__(6144);
-/******/ 	module.exports = __webpack_exports__;
-/******/ 	
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+(() => {
+"use strict";
+var exports = __webpack_exports__;
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.run = void 0;
+const core_1 = __nccwpck_require__(2186);
+const validate_1 = __nccwpck_require__(4953);
+const github_1 = __nccwpck_require__(5438);
+async function run() {
+    try {
+        const title = (0, core_1.getInput)('title') || '';
+        const titleRegexFlags = (0, core_1.getInput)('title-regex-flags') || '';
+        const titleRegex = new RegExp(title, titleRegexFlags);
+        const body = (0, core_1.getInput)('body') || '';
+        const bodyRegexFlags = (0, core_1.getInput)('body-regex-flags') || '';
+        const bodyRegex = new RegExp(body, bodyRegexFlags);
+        const issueType = (0, core_1.getInput)('issue-type') || '';
+        const issueNumber = (0, core_1.getInput)('issue-number') || '';
+        const isAutoClose = (0, core_1.getInput)('is-auto-close') || '';
+        const octokit = (0, github_1.getOctokit)((0, core_1.getInput)('github-token'));
+        const result = await (0, validate_1.validateIssueTitleAndBody)(issueType, parseInt(issueNumber), titleRegex, bodyRegex);
+        if (result === true) {
+            (0, core_1.setOutput)('result', 'true');
+        }
+        else {
+            if (isAutoClose === 'true') {
+                (0, core_1.warning)(`Issue #${issueNumber} is not valid. Auto closing issue...`);
+                // Add comment
+                await octokit.rest.issues.createComment({
+                    owner: github_1.context.repo.owner,
+                    repo: github_1.context.repo.repo,
+                    issue_number: parseInt(issueNumber),
+                    body: `Issue #${issueNumber} is not valid: Reason: ${result}: auto closing issue...`,
+                });
+                // Close issue
+                await octokit.rest.issues.update({
+                    owner: github_1.context.repo.owner,
+                    repo: github_1.context.repo.repo,
+                    issue_number: parseInt(issueNumber),
+                    state: 'closed',
+                });
+            }
+            (0, core_1.setOutput)('result', 'false');
+        }
+        /* eslint @typescript-eslint/no-explicit-any: 0,  @typescript-eslint/no-unsafe-argument: 0, @typescript-eslint/no-unsafe-member-access: 0, @typescript-eslint/no-floating-promises: 0 */
+    }
+    catch (error) {
+        (0, core_1.setFailed)(error.message);
+    }
+}
+exports.run = run;
+run();
+
+})();
+
+module.exports = __webpack_exports__;
 /******/ })()
 ;
 //# sourceMappingURL=index.js.map
