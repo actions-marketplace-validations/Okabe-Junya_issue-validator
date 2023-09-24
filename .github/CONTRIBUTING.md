@@ -20,4 +20,3 @@ This project is open for contributions, but before you start, please read the [c
 3. Select the "Bug report" template
 4. Fill the template
 5. Click on the "Submit new issue" button
-
