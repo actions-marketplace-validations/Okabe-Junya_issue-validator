@@ -1,6 +1,9 @@
 name: 'issue-validator'
 description: 'auto close issue if it does not meet the conditions'
 author: 'Okabe-Junya'
+branding:
+  icon: 'alert-triangle'
+  color: 'gray-dark'
 inputs:
   title:
     description: 'title for issue'
