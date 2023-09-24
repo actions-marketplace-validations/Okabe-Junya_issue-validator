@@ -9663,6 +9663,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.run = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const validate_1 = __nccwpck_require__(4953);
+const github = __importStar(__nccwpck_require__(5438));
 async function run() {
     try {
         const title = core.getInput('title') || '';
@@ -9673,11 +9674,30 @@ async function run() {
         const body_regex = new RegExp(body, body_regex_flags);
         const issue_type = core.getInput('issue-type') || '';
         const issue_number = core.getInput('issue-number') || '';
+        const is_auto_close = core.getInput('is-auto-close') || '';
+        const octokit = github.getOctokit(core.getInput('github-token'));
         const result = await (0, validate_1.validateIssueTitleAndBody)(issue_type, parseInt(issue_number), title_regex, body_regex);
         if (result === true) {
             core.setOutput('result', 'true');
         }
         else {
+            if (is_auto_close === 'true') {
+                core.warning(`Issue #${issue_number} is not valid. Auto closing issue...`);
+                // Add comment
+                await octokit.rest.issues.createComment({
+                    owner: github.context.repo.owner,
+                    repo: github.context.repo.repo,
+                    issue_number: parseInt(issue_number),
+                    body: `Issue #${issue_number} is not valid: Reason: ${result}: auto closing issue...`,
+                });
+                // Close issue
+                await octokit.rest.issues.update({
+                    owner: github.context.repo.owner,
+                    repo: github.context.repo.repo,
+                    issue_number: parseInt(issue_number),
+                    state: 'closed',
+                });
+            }
             core.setOutput('result', 'false');
         }
     }
