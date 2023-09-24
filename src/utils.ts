@@ -1,9 +1,7 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
 
-export async function getIssueTitleAndBody(
-  issue_number: number,
-): Promise<{ title: string; body: string }> {
+export async function getIssueTitleAndBody(issue_number: number): Promise<{ title: string; body: string }> {
   const token = core.getInput('token', { required: true });
   const octokit = github.getOctokit(token);
   const { data: issue } = await octokit.rest.issues.get({
@@ -18,9 +16,7 @@ export async function getIssueTitleAndBody(
   };
 }
 
-export async function getPullRequestTitleAndBody(
-  pull_number: number,
-): Promise<{ title: string; body: string }> {
+export async function getPullRequestTitleAndBody(pull_number: number): Promise<{ title: string; body: string }> {
   const token = core.getInput('token', { required: true });
   const octokit = github.getOctokit(token);
   const { data: pullRequest } = await octokit.rest.pulls.get({

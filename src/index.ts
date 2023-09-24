@@ -15,19 +15,12 @@ export async function run() {
     const is_auto_close = core.getInput('is-auto-close') || '';
 
     const octokit = github.getOctokit(core.getInput('github-token'));
-    const result = await validateIssueTitleAndBody(
-      issue_type,
-      parseInt(issue_number),
-      title_regex,
-      body_regex,
-    );
+    const result = await validateIssueTitleAndBody(issue_type, parseInt(issue_number), title_regex, body_regex);
     if (result === true) {
       core.setOutput('result', 'true');
     } else {
       if (is_auto_close === 'true') {
-        core.warning(
-          `Issue #${issue_number} is not valid. Auto closing issue...`,
-        );
+        core.warning(`Issue #${issue_number} is not valid. Auto closing issue...`);
         // Add comment
         await octokit.rest.issues.createComment({
           owner: github.context.repo.owner,
