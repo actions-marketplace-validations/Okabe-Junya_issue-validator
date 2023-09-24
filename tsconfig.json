@@ -17,5 +17,6 @@
     "dist",
     "lib",
     "build"
-  ]
+  ],
+  "moduleResolution": "node",
 }
