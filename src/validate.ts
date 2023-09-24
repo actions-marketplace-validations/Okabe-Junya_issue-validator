@@ -3,9 +3,12 @@ import { getIssueTitleAndBody, getPullRequestTitleAndBody } from './utils';
 export async function validateIssueTitleAndBody(
   issue_type: string,
   issue_number: number,
-  title_regex: RegExp,
-  body_regex: RegExp,
+  title_regex: RegExp | null,
+  body_regex: RegExp | null,
 ): Promise<boolean | { result: boolean }> {
+  if (!title_regex && !body_regex) {
+    return true;
+  }
   if (issue_type === 'issue') {
     const { title, body } = await getIssueTitleAndBody(issue_number);
     if (title_regex && !title_regex.test(title)) {
