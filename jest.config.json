@@ -1,0 +1,6 @@
+{
+  "bail": 1,
+  "verbose": true,
+  "reporters": ["default", "jest-failure-reporter"],
+  "rootDir": "src"
+}
