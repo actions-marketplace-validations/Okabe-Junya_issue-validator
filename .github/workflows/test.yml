@@ -1,0 +1,58 @@
+name: jest test
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies with Yarn
+        run: yarn install
+
+      - name: Cache Dependencies
+        uses: actions/cache@v3
+        with:
+          path: node/ci-dependency/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('yarn.lock') }}
+
+  test:
+    needs: setup
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node: [18, 20]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Install Dependencies
+        run: yarn install
+
+      - name: Cache Dependencies
+        uses: actions/cache@v3
+        with:
+          path: node/ci-dependency/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('yarn.lock') }}
+
+      - name: Run Tests
+        run: yarn test
