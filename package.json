@@ -26,7 +26,7 @@
     "typescript": "^5.2.2"
   },
   "scripts": {
-    "build": "ncc build src/index.ts -o dist --source-map --license LICENSE",
+    "build": "ncc build src/index.ts -o dist --source-map --license licenses.txt",
     "lint": "eslint . --ext .ts",
     "test": "jest",
     "prettier": "prettier --write ."
