@@ -1,4 +1,4 @@
-import { expect, jest, test } from '@jest/globals';
+import { expect, jest } from '@jest/globals';
 import { getIssueTitleAndBody, getPullRequestTitleAndBody } from './utils';
 
 describe('getIssueTitleAndBody', () => {
