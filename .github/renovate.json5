@@ -1,6 +1,63 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+
+  // General configuration
   "extends": [
-    "config:base"
-  ]
+    "config:base",
+    ":timezone(Asia/Tokyo)",
+    ":prHourlyLimitNone",
+    ":automergePatch",
+    ":automergeMinor",
+    ":automergeMinorDevDependencies",
+    ":automergePin",
+    ":preserveSemverRanges"
+  ],
+
+  "schedule": ["after 3am and before 9am every weekday"],
+
+  "labels": ["dependencies", "renovate"],
+
+  "dependencyDashboard": true,
+
+  "patch": {
+    "groupName": "renovate-patch"
+  },
+
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["pin"],
+      "addLabels": ["pin"]
+    },
+    {
+      "matchUpdateTypes": ["major"],
+      "addLabels": ["bump: major"]
+    },
+    {
+      "matchUpdateTypes": ["minor"],
+      "addLabels": ["bump: minor"]
+    },
+    {
+      "matchUpdateTypes": ["patch"],
+      "addLabels": ["bump: patch"],
+      "automerge": true
+    },
+    {
+      "commitMessageTopic": "Node.js",
+      "excludePackageNames": [
+        "calico/node",
+        "kindest/node"
+      ],
+    "matchDatasources": [
+      "docker"
+    ],
+    "matchDepNames": [
+      "node"
+    ],
+    "matchPackagePatterns": [
+      "/node$"
+    ]
+    }
+  ],
+
+  "regexManagers": []
 }
