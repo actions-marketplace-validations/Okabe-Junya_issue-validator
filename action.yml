@@ -21,6 +21,10 @@ inputs:
   token:
     description: 'token for github'
     default: ${{ github.server_url == 'https://github.com' && github.token || '' }}
+  is-auto-close:
+    description: 'auto close issue if it does not meet the conditions'
+    required: false
+    default: 'false'
 outputs:
   result:
     description: 'result of validation'
