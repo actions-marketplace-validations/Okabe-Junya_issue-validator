@@ -3,5 +3,6 @@
   "verbose": true,
   "reporters": ["default", "jest-failure-reporter"],
   "rootDir": "src",
-  "preset": "ts-jest"
+  "preset": "ts-jest",
+  "resetMocks": true
 }
