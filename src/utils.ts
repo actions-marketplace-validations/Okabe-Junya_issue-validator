@@ -2,7 +2,7 @@ import { getInput } from '@actions/core';
 import { getOctokit, context } from '@actions/github';
 
 export async function getIssueTitleAndBody(issueNumber: number): Promise<{ title: string; body: string }> {
-  const token = getInput('token', { required: true });
+  const token = getInput('github-token', { required: true });
   const octokit = getOctokit(token);
   const { data: issue } = await octokit.rest.issues.get({
     owner: context.repo.owner,
@@ -17,7 +17,7 @@ export async function getIssueTitleAndBody(issueNumber: number): Promise<{ title
 }
 
 export async function getPullRequestTitleAndBody(pullNumber: number): Promise<{ title: string; body: string }> {
-  const token = getInput('token', { required: true });
+  const token = getInput('github-token', { required: true });
   const octokit = getOctokit(token);
   const { data: pullRequest } = await octokit.rest.pulls.get({
     owner: context.repo.owner,

@@ -4,8 +4,7 @@ import { getIssueTitleAndBody, getPullRequestTitleAndBody } from './utils';
 describe('getIssueTitleAndBody', () => {
   it('returns title and body', async () => {
     // mock implementation of getInput
-    const mockGetInput = jest.fn().mockReturnValue('token');
-
+    const mockGetInput = jest.fn().mockReturnValue('github-token');
     // mock implementation of getOctokit
     const mockGetOctokit = jest.fn().mockReturnValue({
       rest: {
@@ -42,15 +41,15 @@ describe('getIssueTitleAndBody', () => {
     // assert the results
     expect(title).toBe('sample issue title');
     expect(body).toBe('sample issue body');
-    expect(mockGetInput).toHaveBeenCalledWith('token', { required: true });
-    expect(mockGetOctokit).toHaveBeenCalledWith('token');
+    expect(mockGetInput).toHaveBeenCalledWith('github-token', { required: true });
+    expect(mockGetOctokit).toHaveBeenCalledWith('github-token');
   });
 });
 
 describe('getPullRequestTitleAndBody', () => {
   it('returns title and body', async () => {
     // mock implementation of getInput
-    const mockGetInput = jest.fn().mockReturnValue('token');
+    const mockGetInput = jest.fn().mockReturnValue('github-token');
 
     // mock implementation of getOctokit
     const mockGetOctokit = jest.fn().mockReturnValue({
@@ -88,7 +87,7 @@ describe('getPullRequestTitleAndBody', () => {
     // assert the results
     expect(title).toBe('sample pull request title');
     expect(body).toBe('sample pull request body');
-    expect(mockGetInput).toHaveBeenCalledWith('token', { required: true });
-    expect(mockGetOctokit).toHaveBeenCalledWith('token');
+    expect(mockGetInput).toHaveBeenCalledWith('github-token', { required: true });
+    expect(mockGetOctokit).toHaveBeenCalledWith('github-token');
   });
 });
