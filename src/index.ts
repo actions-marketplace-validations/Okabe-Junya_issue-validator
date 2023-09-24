@@ -1,5 +1,4 @@
 import * as core from '@actions/core';
-import * as github from '@actions/github';
 import { validateIssueTitleAndBody } from './validate';
 
 export async function run() {
