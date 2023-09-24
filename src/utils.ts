@@ -1,13 +1,13 @@
-import * as core from '@actions/core';
-import * as github from '@actions/github';
+import { getInput } from '@actions/core';
+import { getOctokit, context } from '@actions/github';
 
-export async function getIssueTitleAndBody(issue_number: number): Promise<{ title: string; body: string }> {
-  const token = core.getInput('token', { required: true });
-  const octokit = github.getOctokit(token);
+export async function getIssueTitleAndBody(issueNumber: number): Promise<{ title: string; body: string }> {
+  const token = getInput('token', { required: true });
+  const octokit = getOctokit(token);
   const { data: issue } = await octokit.rest.issues.get({
-    owner: github.context.repo.owner,
-    repo: github.context.repo.repo,
-    issue_number,
+    owner: context.repo.owner,
+    repo: context.repo.repo,
+    issue_number: issueNumber,
   });
   issue.body = issue.body || '';
   return {
@@ -16,13 +16,13 @@ export async function getIssueTitleAndBody(issue_number: number): Promise<{ titl
   };
 }
 
-export async function getPullRequestTitleAndBody(pull_number: number): Promise<{ title: string; body: string }> {
-  const token = core.getInput('token', { required: true });
-  const octokit = github.getOctokit(token);
+export async function getPullRequestTitleAndBody(pullNumber: number): Promise<{ title: string; body: string }> {
+  const token = getInput('token', { required: true });
+  const octokit = getOctokit(token);
   const { data: pullRequest } = await octokit.rest.pulls.get({
-    owner: github.context.repo.owner,
-    repo: github.context.repo.repo,
-    pull_number,
+    owner: context.repo.owner,
+    repo: context.repo.repo,
+    pull_number: pullNumber,
   });
   pullRequest.body = pullRequest.body || '';
   return {
